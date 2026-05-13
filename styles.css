@@ -724,6 +724,12 @@ section {
     font-weight: 500;
 }
 
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
 .project-link {
     display: inline-flex;
     align-items: center;
