@@ -656,10 +656,57 @@ section {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 20px;
-    padding: var(--spacing-md);
+    padding: 0;
     transition: var(--transition-base);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    perspective: 1000px;
+    height: 480px;
+}
+
+.project-card .project-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.project-card:hover .project-flip-inner {
+    transform: rotateY(180deg);
+}
+
+.project-flip-front,
+.project-flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: var(--spacing-md);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border-radius: 20px;
+}
+
+.project-flip-back {
+    transform: rotateY(180deg);
+}
+
+.volunteer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(0, 229, 160, 0.1);
+    border: 1px solid var(--success);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--success);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    width: fit-content;
 }
 
 .project-card::before {
@@ -673,6 +720,8 @@ section {
     transform: scaleX(0);
     transform-origin: left;
     transition: var(--transition-base);
+    z-index: 10;
+    border-radius: 20px 20px 0 0;
 }
 
 .project-card:hover::before {
@@ -681,7 +730,6 @@ section {
 
 .project-card:hover {
     border-color: var(--accent);
-    transform: translateY(-8px);
     box-shadow: 0 20px 60px rgba(0, 217, 255, 0.15);
 }
 
@@ -705,6 +753,7 @@ section {
     color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: var(--spacing-sm);
+    flex-grow: 0;
 }
 
 .project-tech {
@@ -712,6 +761,7 @@ section {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: var(--spacing-sm);
+    margin-top: auto;
 }
 
 .tech-tag {
@@ -751,6 +801,7 @@ section {
 .project-link:hover svg {
     transform: translateX(4px);
 }
+
 
 /* Skills Section */
 .skills-grid {
@@ -1041,5 +1092,61 @@ section {
     .education-card {
         flex-direction: column;
         text-align: center;
+    }
+    
+    /* Enhanced project card mobile styles */
+    .project-card {
+        height: auto;
+        min-height: auto;
+        transform-origin: center center;
+    }
+    
+    /* Add a subtle pulse on tap for mobile */
+    .project-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Disable flip effect on mobile for all cards */
+    .project-card .project-flip-inner {
+        transform: none !important;
+        height: auto;
+    }
+    
+    .project-flip-front,
+    .project-flip-back {
+        position: relative;
+        height: auto;
+        backface-visibility: visible;
+        -webkit-backface-visibility: visible;
+    }
+    
+    .project-flip-back {
+        transform: none;
+        margin-top: var(--spacing-md);
+        padding-top: var(--spacing-md);
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .project-flip-front p[style*="Hover"],
+    .project-flip-front p[style*="hover"] {
+        display: none;
+    }
+    
+    /* Make the tech tags animate in */
+    .tech-tag {
+        animation: fadeInUp 0.4s ease-out backwards;
+    }
+    
+    .tech-tag:nth-child(1) { animation-delay: 0.1s; }
+    .tech-tag:nth-child(2) { animation-delay: 0.15s; }
+    .tech-tag:nth-child(3) { animation-delay: 0.2s; }
+    .tech-tag:nth-child(4) { animation-delay: 0.25s; }
+    .tech-tag:nth-child(5) { animation-delay: 0.3s; }
+    .tech-tag:nth-child(6) { animation-delay: 0.35s; }
+    
+    /* Animate project links */
+    .project-link {
+        animation: fadeInUp 0.5s ease-out 0.4s backwards;
     }
 }

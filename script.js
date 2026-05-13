@@ -209,6 +209,35 @@ if (window.innerWidth > 768) {
     animateCircles();
 }
 
+// Enhanced project card animations for mobile
+const projectCards = document.querySelectorAll('.project-card');
+
+if (window.innerWidth <= 768) {
+    const projectObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Stagger the animation based on card index
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }, index * 100);
+                
+                projectObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    projectCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(40px) scale(0.95)';
+        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        projectObserver.observe(card);
+    });
+}
+
 // Add loading animation
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
